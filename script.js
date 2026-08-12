@@ -1079,30 +1079,62 @@ function initBookingForm() {
         });
     });
 
-    // Submit handler -> Dynamic WhatsApp string format
+    // Submit handler -> Dynamic WhatsApp string format & Direct Mobile Redirection
     if (form) {
         form.addEventListener('submit', (e) => {
             e.preventDefault();
 
-            const fullName = document.getElementById('fullName').value;
-            const age = document.getElementById('patientAge').value;
-            const gender = document.getElementById('patientGender').value;
-            const phone = document.getElementById('patientPhone').value;
-            const email = document.getElementById('patientEmail').value || 'N/A';
+            const fullNameEl = document.getElementById('fullName');
+            const ageEl = document.getElementById('patientAge');
+            const genderEl = document.getElementById('patientGender');
+            const phoneEl = document.getElementById('patientPhone');
+            const mainConcernEl = document.getElementById('mainConcern');
 
-            const mainConcern = document.getElementById('mainConcern').value;
-            const conditionDetails = document.getElementById('conditionDetails').value || 'None provided';
-            const duration = document.getElementById('conditionDuration').value;
+            // Programmatic Step Validation
+            if (!fullNameEl || !fullNameEl.value.trim() || !ageEl || !ageEl.value.trim() || !genderEl || !genderEl.value || !phoneEl || !phoneEl.value.trim()) {
+                document.querySelectorAll('.form-step').forEach(s => s.classList.remove('active'));
+                document.getElementById('step1').classList.add('active');
+                stepIndicators.forEach(ind => {
+                    ind.classList.remove('active');
+                    if (parseInt(ind.getAttribute('data-step')) <= 1) ind.classList.add('active');
+                });
+                if (fullNameEl && !fullNameEl.value.trim()) fullNameEl.style.borderColor = '#EF4444';
+                if (ageEl && !ageEl.value.trim()) ageEl.style.borderColor = '#EF4444';
+                if (genderEl && !genderEl.value) genderEl.style.borderColor = '#EF4444';
+                if (phoneEl && !phoneEl.value.trim()) phoneEl.style.borderColor = '#EF4444';
+                return;
+            }
 
-            const prefService = document.getElementById('prefService').value;
-            const prefDate = document.getElementById('prefDate').value || 'Not specified';
-            const prefTime = document.getElementById('prefTime').value;
-            const message = document.getElementById('additionalMessage').value || 'None';
+            if (!mainConcernEl || !mainConcernEl.value) {
+                document.querySelectorAll('.form-step').forEach(s => s.classList.remove('active'));
+                document.getElementById('step2').classList.add('active');
+                stepIndicators.forEach(ind => {
+                    ind.classList.remove('active');
+                    if (parseInt(ind.getAttribute('data-step')) <= 2) ind.classList.add('active');
+                });
+                if (mainConcernEl) mainConcernEl.style.borderColor = '#EF4444';
+                return;
+            }
+
+            const fullName = fullNameEl.value.trim();
+            const age = ageEl.value.trim();
+            const gender = genderEl.value;
+            const phone = phoneEl.value.trim();
+            const email = document.getElementById('patientEmail') ? (document.getElementById('patientEmail').value.trim() || 'N/A') : 'N/A';
+
+            const mainConcern = mainConcernEl.value;
+            const conditionDetails = document.getElementById('conditionDetails') ? (document.getElementById('conditionDetails').value.trim() || 'None provided') : 'None provided';
+            const duration = document.getElementById('conditionDuration') ? document.getElementById('conditionDuration').value : 'First time';
+
+            const prefService = document.getElementById('prefService') ? document.getElementById('prefService').value : 'Clinic Physiotherapy';
+            const prefDate = document.getElementById('prefDate') ? (document.getElementById('prefDate').value || 'Not specified') : 'Not specified';
+            const prefTime = document.getElementById('prefTime') ? document.getElementById('prefTime').value : 'Morning';
+            const message = document.getElementById('additionalMessage') ? (document.getElementById('additionalMessage').value.trim() || 'None') : 'None';
 
             let formattedMessage = '';
 
             if (mainConcern === "Hijama & Cupping Therapy") {
-                const hijamaType = document.getElementById('hijamaType').value;
+                const hijamaType = document.getElementById('hijamaType') ? document.getElementById('hijamaType').value : 'Sunnah Points Hijama';
                 const checkedHealth = Array.from(document.querySelectorAll('input[name="hijamaHealth"]:checked')).map(cb => cb.value);
                 const healthSummary = checkedHealth.length > 0 ? checkedHealth.join(', ') : 'None specified';
 
@@ -1137,9 +1169,9 @@ ${message}
 
 Thank you.`;
             } else {
-                const painLevel = document.getElementById('painSlider').value;
+                const painLevel = document.getElementById('painSlider') ? document.getElementById('painSlider').value : '5';
                 const prevInjuryVal = document.querySelector('input[name="prevInjury"]:checked') ? document.querySelector('input[name="prevInjury"]:checked').value : 'No';
-                const injuryDetails = document.getElementById('injuryDetails').value || 'None';
+                const injuryDetails = document.getElementById('injuryDetails') ? (document.getElementById('injuryDetails').value.trim() || 'None') : 'None';
                 const currentPhysioVal = document.querySelector('input[name="currentPhysio"]:checked') ? document.querySelector('input[name="currentPhysio"]:checked').value : 'No';
                 const pastPhysioVal = document.querySelector('input[name="pastPhysio"]:checked') ? document.querySelector('input[name="pastPhysio"]:checked').value : 'No';
 
@@ -1180,7 +1212,9 @@ Thank you.`;
 
             const encoded = encodeURIComponent(formattedMessage);
             const waUrl = `https://wa.me/${clinic.whatsapp}?text=${encoded}`;
-            window.open(waUrl, '_blank');
+            
+            // Direct redirection guarantees WhatsApp app / Web opens smoothly
+            window.location.href = waUrl;
         });
     }
 }
