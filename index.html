@@ -846,14 +846,27 @@
                                 </select>
                             </div>
 
-                            <div class="form-group full-width">
-                                <label for="conditionDetails">Tell us about your condition</label>
-                                <textarea id="conditionDetails" rows="3" placeholder="Describe symptoms, location of pain, or specific triggers..."></textarea>
+                            <div class="form-group full-width hidden-field" id="hijamaOptionsGroup">
+                                <label for="hijamaType">Hijama / Cupping Specific Goal *</label>
+                                <select id="hijamaType">
+                                    <option value="Sunnah Points Hijama (General Wellness & Sunnah)">Sunnah Points Hijama (General Wellness & Sunnah)</option>
+                                    <option value="Detox & Back Muscle Relief Hijama">Detox & Back Muscle Relief Hijama</option>
+                                    <option value="Head & Migraine / Tension Relief Hijama">Head & Migraine / Tension Relief Hijama</option>
+                                    <option value="Facial & Cosmetic Cupping">Facial & Cosmetic Cupping</option>
+                                    <option value="Joint & Knee Pain Relief Hijama">Joint & Knee Pain Relief Hijama</option>
+                                    <option value="Full Body Detox Cupping">Full Body Detox Cupping</option>
+                                </select>
                             </div>
 
-                            <div class="form-group">
-                                <label for="conditionDuration">How long have you had this problem?</label>
+                            <div class="form-group full-width">
+                                <label for="conditionDetails" id="conditionDetailsLabel">Tell us about your condition / goals</label>
+                                <textarea id="conditionDetails" rows="3" placeholder="Describe symptoms, location of concern, or specific health goals..."></textarea>
+                            </div>
+
+                            <div class="form-group" id="conditionDurationGroup">
+                                <label for="conditionDuration">How long have you had this problem / goal?</label>
                                 <select id="conditionDuration">
+                                    <option value="General Wellness / First Time">General Wellness / First Time</option>
                                     <option value="Less than 1 week">Less than 1 week</option>
                                     <option value="1–4 weeks">1–4 weeks</option>
                                     <option value="1–3 months">1–3 months</option>
@@ -863,8 +876,8 @@
                                 </select>
                             </div>
 
-                            <div class="form-group">
-                                <label>Pain Severity Level (0 to 10): <span id="painLevelDisplay" class="pain-badge">5/10</span></label>
+                            <div class="form-group" id="painSliderGroup">
+                                <label id="painSliderLabel">Pain Severity Level (0 to 10): <span id="painLevelDisplay" class="pain-badge">5/10</span></label>
                                 <div class="pain-slider-container">
                                     <input type="range" id="painSlider" min="0" max="10" value="5" class="pain-slider">
                                     <div class="slider-labels">
@@ -883,9 +896,23 @@
 
                     <!-- STEP 3: MEDICAL DETAILS -->
                     <div class="form-step" id="step3">
-                        <h3 class="step-heading">Step 3: Medical History</h3>
+                        <h3 class="step-heading">Step 3: Medical History & Safety Check</h3>
                         <div class="form-grid">
-                            <div class="form-group full-width">
+                            <!-- Hijama Safety Check Group (Hidden by default, shown for Hijama) -->
+                            <div class="form-group full-width hidden-field" id="hijamaMedicalGroup">
+                                <label>Hijama Health Check: Do you have any of the following?</label>
+                                <div class="radio-pill-group">
+                                    <label class="radio-pill"><input type="checkbox" name="hijamaHealth" value="Blood Thinners"> <span>Blood Thinners</span></label>
+                                    <label class="radio-pill"><input type="checkbox" name="hijamaHealth" value="Low BP / Anemia"> <span>Low BP / Anemia</span></label>
+                                    <label class="radio-pill"><input type="checkbox" name="hijamaHealth" value="Diabetes"> <span>Diabetes</span></label>
+                                    <label class="radio-pill"><input type="checkbox" name="hijamaHealth" value="Skin Allergies"> <span>Skin Allergies</span></label>
+                                    <label class="radio-pill"><input type="checkbox" name="hijamaHealth" value="Pregnancy"> <span>Pregnancy</span></label>
+                                    <label class="radio-pill"><input type="checkbox" name="hijamaHealth" value="None / Fully Fit" checked> <span>None / Fully Fit</span></label>
+                                </div>
+                            </div>
+
+                            <!-- Standard Physio Medical Group (Shown by default) -->
+                            <div class="form-group full-width" id="standardMedicalGroup">
                                 <label>Previous Injury or Surgery related to this issue?</label>
                                 <div class="radio-pill-group">
                                     <label class="radio-pill"><input type="radio" name="prevInjury" value="No" checked> <span>No</span></label>

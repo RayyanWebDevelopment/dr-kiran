@@ -1078,16 +1078,27 @@ body {
     background: rgba(255, 255, 255, 0.03);
     border: 1px solid var(--color-dark-border);
     border-radius: 28px;
-    padding: 40px;
+    padding: 50px 30px;
     margin-top: 40px;
     position: relative;
 }
 
 .human-biomechanics-svg {
     width: 100%;
-    max-width: 800px;
+    max-width: 950px;
+    min-height: 520px;
     height: auto;
     margin: 0 auto;
+    display: block;
+}
+
+@media (max-width: 768px) {
+    .movement-canvas-container {
+        padding: 24px 12px;
+    }
+    .human-biomechanics-svg {
+        min-height: 420px;
+    }
 }
 
 .body-scan-line {
@@ -2325,8 +2336,86 @@ body {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding-top: 20px;
+    gap: 16px;
+    padding-top: 24px;
     border-top: 1px solid var(--color-gray-200);
+}
+
+.btn-whatsapp-submit {
+    background-color: #25D366;
+    color: var(--color-white);
+    border: none;
+    box-shadow: 0 8px 25px rgba(37, 211, 102, 0.3);
+}
+
+.btn-whatsapp-submit:hover {
+    background-color: #1EBE5D;
+    transform: translateY(-2px);
+    box-shadow: 0 12px 30px rgba(37, 211, 102, 0.4);
+}
+
+@media (max-width: 768px) {
+    .form-actions {
+        flex-direction: column-reverse;
+        gap: 14px;
+        width: 100%;
+    }
+    
+    .form-actions .btn {
+        width: 100%;
+        justify-content: center;
+        padding: 14px 20px;
+        font-size: 0.95rem;
+        text-align: center;
+    }
+
+    .btn-whatsapp-submit {
+        width: 100%;
+        justify-content: center;
+        padding: 16px 20px;
+        font-size: 0.95rem;
+        word-break: break-word;
+        text-align: center;
+        border-radius: 40px;
+    }
+
+    .hero-buttons {
+        flex-direction: column;
+        width: 100%;
+        gap: 12px;
+    }
+
+    .hero-buttons .btn {
+        width: 100%;
+        justify-content: center;
+    }
+
+    .contact-buttons {
+        flex-direction: column;
+        width: 100%;
+        gap: 12px;
+    }
+
+    .contact-buttons .btn {
+        width: 100%;
+        justify-content: center;
+        text-align: center;
+    }
+
+    .social-links-bar {
+        flex-wrap: wrap;
+        gap: 12px;
+        justify-content: center;
+    }
+
+    .radio-pill-group {
+        gap: 10px;
+    }
+
+    .radio-pill span {
+        padding: 8px 14px;
+        font-size: 0.8rem;
+    }
 }
 
 /* ==========================================================================

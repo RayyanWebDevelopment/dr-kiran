@@ -964,6 +964,35 @@ function initBookingForm() {
         });
     }
 
+    // Category-driven dynamic field switcher (Hijama vs Pain / Rehab)
+    const mainConcernSelect = document.getElementById('mainConcern');
+    const hijamaOptionsGroup = document.getElementById('hijamaOptionsGroup');
+    const painSliderGroup = document.getElementById('painSliderGroup');
+    const hijamaMedicalGroup = document.getElementById('hijamaMedicalGroup');
+    const standardMedicalGroup = document.getElementById('standardMedicalGroup');
+    const prefServiceSelect = document.getElementById('prefService');
+    const conditionDetailsLabel = document.getElementById('conditionDetailsLabel');
+
+    if (mainConcernSelect) {
+        mainConcernSelect.addEventListener('change', (e) => {
+            const val = e.target.value;
+            if (val === "Hijama & Cupping Therapy") {
+                if (hijamaOptionsGroup) hijamaOptionsGroup.classList.remove('hidden-field');
+                if (painSliderGroup) painSliderGroup.classList.add('hidden-field');
+                if (hijamaMedicalGroup) hijamaMedicalGroup.classList.remove('hidden-field');
+                if (standardMedicalGroup) standardMedicalGroup.classList.add('hidden-field');
+                if (conditionDetailsLabel) conditionDetailsLabel.innerText = "Hijama Therapy Requirements / Specific Notes";
+                if (prefServiceSelect) prefServiceSelect.value = "Hijama & Cupping Therapy";
+            } else {
+                if (hijamaOptionsGroup) hijamaOptionsGroup.classList.add('hidden-field');
+                if (painSliderGroup) painSliderGroup.classList.remove('hidden-field');
+                if (hijamaMedicalGroup) hijamaMedicalGroup.classList.add('hidden-field');
+                if (standardMedicalGroup) standardMedicalGroup.classList.remove('hidden-field');
+                if (conditionDetailsLabel) conditionDetailsLabel.innerText = "Tell us about your condition / pain symptoms";
+            }
+        });
+    }
+
     // Step switching logic
     const nextBtns = document.querySelectorAll('.btn-next');
     const prevBtns = document.querySelectorAll('.btn-prev');
@@ -1018,7 +1047,7 @@ function initBookingForm() {
         });
     });
 
-    // Submit handler -> WhatsApp string format
+    // Submit handler -> Dynamic WhatsApp string format
     if (form) {
         form.addEventListener('submit', (e) => {
             e.preventDefault();
@@ -1032,19 +1061,57 @@ function initBookingForm() {
             const mainConcern = document.getElementById('mainConcern').value;
             const conditionDetails = document.getElementById('conditionDetails').value || 'None provided';
             const duration = document.getElementById('conditionDuration').value;
-            const painLevel = document.getElementById('painSlider').value;
-
-            const prevInjuryVal = document.querySelector('input[name="prevInjury"]:checked').value;
-            const injuryDetails = document.getElementById('injuryDetails').value || 'None';
-            const currentPhysioVal = document.querySelector('input[name="currentPhysio"]:checked').value;
-            const pastPhysioVal = document.querySelector('input[name="pastPhysio"]:checked').value;
 
             const prefService = document.getElementById('prefService').value;
             const prefDate = document.getElementById('prefDate').value || 'Not specified';
             const prefTime = document.getElementById('prefTime').value;
             const message = document.getElementById('additionalMessage').value || 'None';
 
-            const formattedMessage = 
+            let formattedMessage = '';
+
+            if (mainConcern === "Hijama & Cupping Therapy") {
+                const hijamaType = document.getElementById('hijamaType').value;
+                const checkedHealth = Array.from(document.querySelectorAll('input[name="hijamaHealth"]:checked')).map(cb => cb.value);
+                const healthSummary = checkedHealth.length > 0 ? checkedHealth.join(', ') : 'None specified';
+
+                formattedMessage = 
+`Hello Dr. Kiran Ameer,
+
+I would like to book a consultation.
+
+*PATIENT INFORMATION*
+Name: ${fullName}
+Age: ${age}
+Gender: ${gender}
+Phone: ${phone}
+Email: ${email}
+
+*HIJAMA & CUPPING SERVICE REQUEST*
+Primary Focus: Hijama & Cupping Therapy
+Specific Goal: ${hijamaType}
+Notes/Requirements: ${conditionDetails}
+Duration / Preference: ${duration}
+
+*HEALTH & SAFETY CHECK*
+Medical Considerations: ${healthSummary}
+
+*CONSULTATION PREFERENCE*
+Preferred Service: ${prefService}
+Preferred Date: ${prefDate}
+Preferred Time: ${prefTime}
+
+*ADDITIONAL MESSAGE*
+${message}
+
+Thank you.`;
+            } else {
+                const painLevel = document.getElementById('painSlider').value;
+                const prevInjuryVal = document.querySelector('input[name="prevInjury"]:checked') ? document.querySelector('input[name="prevInjury"]:checked').value : 'No';
+                const injuryDetails = document.getElementById('injuryDetails').value || 'None';
+                const currentPhysioVal = document.querySelector('input[name="currentPhysio"]:checked') ? document.querySelector('input[name="currentPhysio"]:checked').value : 'No';
+                const pastPhysioVal = document.querySelector('input[name="pastPhysio"]:checked') ? document.querySelector('input[name="pastPhysio"]:checked').value : 'No';
+
+                formattedMessage = 
 `Hello Dr. Kiran Ameer,
 
 I would like to book a physiotherapy consultation.
@@ -1056,11 +1123,11 @@ Gender: ${gender}
 Phone: ${phone}
 Email: ${email}
 
-*CONDITION*
+*CONDITION & PAIN SYMPTOMS*
 Main Concern: ${mainConcern}
 Details: ${conditionDetails}
 Duration: ${duration}
-Pain Level: ${painLevel}/10
+Pain Severity: ${painLevel}/10
 
 *MEDICAL INFORMATION*
 Previous Injury/Surgery: ${prevInjuryVal}
@@ -1077,6 +1144,7 @@ Preferred Time: ${prefTime}
 ${message}
 
 Thank you.`;
+            }
 
             const encoded = encodeURIComponent(formattedMessage);
             const waUrl = `https://wa.me/${clinic.whatsapp}?text=${encoded}`;
