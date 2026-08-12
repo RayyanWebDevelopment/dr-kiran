@@ -13,7 +13,7 @@ const clinic = {
     phone: "03275466380",
     address: "Plot No. 17-C, Commercial Avenue, Main Blvd, Block A, New City Phase 2, Wah Cantt, Pakistan",
     googleReviewUrl: "https://g.page/r/Cfoh_a5XDYQcEAE/review",
-    googleMapsUrl: "https://maps.google.com/?q=Plot+No.+17-C,+Commercial+Avenue,+Main+Blvd,+Block+A,+New+City+Phase+2,+Wah+Cantt,+Pakistan",
+    googleMapsUrl: "https://www.google.com/maps/search/?api=1&query=Plot+no+17-C,+Dr+Kiran+Ameer+%7C+Physiotherapist,+commercial+avenue,+Main+Blvd,+BLOCK+A+Phase+2+Wah+Cantt,+Pakistan",
     social: {
         instagram: "https://www.instagram.com/dr.kiranameerpt?igsh=MWk5azlmNDB5MmFzYQ==",
         facebook: "https://facebook.com"
