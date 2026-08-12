@@ -391,6 +391,7 @@ document.addEventListener('DOMContentLoaded', () => {
     initCustomCursor();
     initNavbar();
     initScrollAnimations();
+    initScrollVideoObserver();
     initParallax();
     initCounters();
     initTimeline();
@@ -525,6 +526,37 @@ function initScrollAnimations() {
     }, observerOptions);
 
     animatedElements.forEach(el => observer.observe(el));
+}
+
+/* --------------------------------------------------------------------------
+   SCROLL-DRIVEN VIDEO AUTOPLAY / PAUSE OBSERVER
+   -------------------------------------------------------------------------- */
+function initScrollVideoObserver() {
+    const video = document.querySelector('.about-video');
+    if (!video) return;
+
+    video.muted = true;
+    video.playsInline = true;
+    video.loop = true;
+
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                const playPromise = video.play();
+                if (playPromise !== undefined) {
+                    playPromise.catch(error => {
+                        console.log("Autoplay waiting for scroll/visibility", error);
+                    });
+                }
+            } else {
+                video.pause();
+            }
+        });
+    }, {
+        threshold: 0.2
+    });
+
+    observer.observe(video);
 }
 
 /* --------------------------------------------------------------------------
