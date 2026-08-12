@@ -1309,8 +1309,26 @@ function initChatbot() {
 
     if (!trigger || !windowEl) return;
 
-    trigger.addEventListener('click', () => windowEl.classList.toggle('open'));
-    if (closeBtn) closeBtn.addEventListener('click', () => windowEl.classList.remove('open'));
+    const toggleChatbot = (shouldOpen) => {
+        if (shouldOpen) {
+            windowEl.classList.add('open');
+            windowEl.setAttribute('aria-hidden', 'false');
+            if (window.innerWidth <= 768) {
+                document.body.classList.add('chatbot-open');
+            }
+        } else {
+            windowEl.classList.remove('open');
+            windowEl.setAttribute('aria-hidden', 'true');
+            document.body.classList.remove('chatbot-open');
+        }
+    };
+
+    trigger.addEventListener('click', () => {
+        const isOpen = windowEl.classList.contains('open');
+        toggleChatbot(!isOpen);
+    });
+
+    if (closeBtn) closeBtn.addEventListener('click', () => toggleChatbot(false));
 
     chips.forEach(chip => {
         chip.addEventListener('click', () => {
