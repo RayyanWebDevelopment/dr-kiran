@@ -11,9 +11,9 @@ const clinic = {
     profession: "Physiotherapist",
     whatsapp: "923275466380",
     phone: "03275466380",
-    address: "Plot No. 17-C, Commercial Avenue, Main Blvd, Block A, Phase 2, Wah Cantt, Pakistan",
+    address: "Plot No. 17-C, Commercial Avenue, Main Blvd, Block A, New City Phase 2, Wah Cantt, Pakistan",
     googleReviewUrl: "https://g.page/r/Cfoh_a5XDYQcEAE/review",
-    googleMapsUrl: "https://maps.google.com/?q=Plot+No.+17-C,+Commercial+Avenue,+Main+Blvd,+Block+A,+Phase+2,+Wah+Cantt,+Pakistan",
+    googleMapsUrl: "https://maps.google.com/?q=Plot+No.+17-C,+Commercial+Avenue,+Main+Blvd,+Block+A,+New+City+Phase+2,+Wah+Cantt,+Pakistan",
     social: {
         instagram: "https://www.instagram.com/dr.kiranameerpt?igsh=MWk5azlmNDB5MmFzYQ==",
         facebook: "https://facebook.com"
@@ -377,7 +377,7 @@ const websiteKnowledge = {
     services: "Dr. Kiran Ameer offers 20 specialized rehabilitation services including Hijama & Cupping Therapy, Dry Needling, Neuro Rehab, Geriatric Rehab, Kinesiology Taping, Home Rehabilitation, Women's Health, Sports Injury Rehab, Post-Surgery Recovery, Sciatica Treatment, Back Pain Relief, and Posture Correction.",
     hijama: "Yes! We offer clinical wet & dry Hijama cupping therapy for localized blood circulation, muscle detoxification, fascia release, and chronic spinal pain relief.",
     hours: "Our clinic hours are Monday through Friday from 09:00 AM to 08:00 PM, Saturday from 10:00 AM to 06:00 PM. We are closed on Sundays.",
-    location: "Our clinic is located at Plot No. 17-C, Commercial Avenue, Main Blvd, Block A, Phase 2, Wah Cantt, Pakistan.",
+    location: "Our clinic is located at Plot No. 17-C, Commercial Avenue, Main Blvd, Block A, New City Phase 2, Wah Cantt, Pakistan.",
     booking: "You can book a consultation directly using the multi-step booking form on this website, or click the WhatsApp button to chat with Dr. Kiran Ameer directly at 0327 5466380.",
     whatsapp: "Dr. Kiran Ameer's official WhatsApp number is 0327 5466380 (International format: +923275466380).",
     reviews: "We maintain a 5.0 rating on Google based on over 500+ verified patient reviews. You can leave or read reviews at https://g.page/r/Cfoh_a5XDYQcEAE/review !"
@@ -1183,7 +1183,7 @@ const faqData = [
     },
     {
         q: "How can I contact Dr. Kiran Ameer?",
-        a: "You can contact Dr. Kiran via WhatsApp or phone call at 0327 5466380, or visit our clinic at Plot No. 17-C, Commercial Avenue, Main Blvd, Block A, Phase 2, Wah Cantt."
+        a: "You can contact Dr. Kiran via WhatsApp or phone call at 0327 5466380, or visit our clinic at Plot No. 17-C, Commercial Avenue, Main Blvd, Block A, New City Phase 2, Wah Cantt."
     },
     {
         q: "How can I leave a Google review?",

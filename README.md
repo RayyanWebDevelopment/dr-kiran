@@ -38,7 +38,7 @@ const clinic = {
     profession: "Physiotherapist",
     whatsapp: "923275466380",
     phone: "03275466380",
-    address: "Plot No. 17-C, Commercial Avenue, Main Blvd, Block A, Phase 2, Wah Cantt, Pakistan",
+    address: "Plot No. 17-C, Commercial Avenue, Main Blvd, Block A, New City Phase 2, Wah Cantt, Pakistan",
     googleReviewUrl: "YOUR_GOOGLE_REVIEW_LINK_HERE",
     googleMapsUrl: "YOUR_GOOGLE_MAPS_LINK_HERE",
     social: {
