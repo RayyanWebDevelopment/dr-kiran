@@ -49,7 +49,7 @@ const servicesData = [
         number: "02",
         name: "Dry Needling",
         category: "pain",
-        icon: "fa-solid fa-needle",
+        icon: "fa-solid fa-person-dots-from-line",
         description: "Targeted myofascial trigger point dry needling to release acute muscle knots, relieve persistent tightness, and accelerate deep tissue healing.",
         benefits: ["Immediate muscle spasm relief", "Improved blood flow & oxygenation", "Restored range of motion"]
     },
@@ -130,7 +130,7 @@ const servicesData = [
         number: "11",
         name: "Orthotics & Prosthetics Support",
         category: "specialized",
-        icon: "fa-solid fa-socks",
+        icon: "fa-solid fa-person-walking",
         description: "Biomechanical footprint assessment, custom brace fitting guidance, and gait adaptation training for prosthetics users.",
         benefits: ["Pressure point distribution", "Custom shoe insert consultation", "Optimized walking mechanics"]
     },
@@ -148,7 +148,7 @@ const servicesData = [
         number: "13",
         name: "Neck Pain Relief",
         category: "pain",
-        icon: "fa-solid fa-user-headset",
+        icon: "fa-solid fa-user-doctor",
         description: "Manual cervical decompression, soft tissue release, and ergonomic posture correction for acute stiffness and tech-neck strain.",
         benefits: ["Cervical spasm relief", "Headache frequency reduction", "Improved cervical range"]
     },
@@ -380,7 +380,8 @@ const websiteKnowledge = {
     location: "Our clinic is located at Plot No. 17-C, Commercial Avenue, Main Blvd, Block A, New City Phase 2, Wah Cantt, Pakistan.",
     booking: "You can book a consultation directly using the multi-step booking form on this website, or click the WhatsApp button to chat with Dr. Kiran Ameer directly at 0327 5466380.",
     whatsapp: "Dr. Kiran Ameer's official WhatsApp number is 0327 5466380 (International format: +923275466380).",
-    reviews: "We maintain a 5.0 rating on Google based on over 500+ verified patient reviews. You can leave or read reviews at https://g.page/r/Cfoh_a5XDYQcEAE/review !"
+    reviews: "We maintain a 5.0 rating on Google based on over 500+ verified patient reviews. You can leave or read reviews at https://g.page/r/Cfoh_a5XDYQcEAE/review !",
+    freeCamp: "Dr. Kiran Ameer is organizing a Free Physiotherapy & Medical Camp at Wah Cantt Clinic on Fridays (14, 21, and 28 August 2026) from 11:00 AM to 05:00 PM. Consultation is 100% Free! You can register via WhatsApp at 0327-5466380."
 };
 
 /* --------------------------------------------------------------------------
@@ -407,6 +408,7 @@ document.addEventListener('DOMContentLoaded', () => {
     initBookingForm();
     initFAQAccordion();
     initChatbot();
+    initCampSection();
     initBackToTop();
     setupConfigURLs();
 });
@@ -643,15 +645,29 @@ function renderServices(filterCategory = 'all') {
         ? servicesData 
         : servicesData.filter(s => s.category === filterCategory);
 
-    grid.innerHTML = filtered.map(service => `
+    const categoryLabels = {
+        pain: "Pain Relief",
+        rehab: "Rehabilitation",
+        sports: "Sports Rehab",
+        neuro: "Neurological Care",
+        specialized: "Specialized Care"
+    };
+
+    grid.innerHTML = filtered.map(service => {
+        const catName = categoryLabels[service.category] || service.category.toUpperCase();
+        return `
         <div class="service-card reveal-up" data-id="${service.id}">
-            <div>
-                <div class="service-card-top">
-                    <span class="service-number">${service.number}</span>
-                    <div class="service-icon-box">
+            <div class="service-card-icon-header">
+                <div class="service-card-bg-glow"></div>
+                <span class="service-category-badge">${catName}</span>
+                <span class="service-number-tag">#${service.number}</span>
+                <div class="service-icon-wrapper">
+                    <div class="service-icon-circle">
                         <i class="${service.icon}"></i>
                     </div>
                 </div>
+            </div>
+            <div class="service-card-content">
                 <h3 class="service-name">${service.name}</h3>
                 <p class="service-desc">${service.description}</p>
             </div>
@@ -660,7 +676,8 @@ function renderServices(filterCategory = 'all') {
                 <i class="fa-solid fa-arrow-right"></i>
             </div>
         </div>
-    `).join('');
+        `;
+    }).join('');
 
     initScrollAnimations();
     attachServiceCardClickListeners();
@@ -716,12 +733,12 @@ function attachServiceCardClickListeners() {
             const service = servicesData.find(s => s.id === id);
 
             if (service && modal) {
-                modalTitle.innerText = service.name;
-                modalCategory.innerText = service.category.toUpperCase();
-                modalIcon.innerHTML = `<i class="${service.icon}"></i>`;
-                modalDesc.innerText = service.description;
-                modalBenefits.innerHTML = service.benefits.map(b => `<li>${b}</li>`).join('');
-                modalBookBtn.setAttribute('href', `#booking`);
+                if (modalTitle) modalTitle.innerText = service.name;
+                if (modalCategory) modalCategory.innerText = service.category.toUpperCase();
+                if (modalIcon) modalIcon.innerHTML = `<i class="${service.icon}"></i>`;
+                if (modalDesc) modalDesc.innerText = service.description;
+                if (modalBenefits) modalBenefits.innerHTML = service.benefits.map(b => `<li>${b}</li>`).join('');
+                if (modalBookBtn) modalBookBtn.setAttribute('href', `#booking`);
                 
                 modal.classList.add('open');
             }
@@ -1462,4 +1479,26 @@ function initHumanBiomechanicsScroll() {
             }
         }
     });
+}
+
+/* --------------------------------------------------------------------------
+   FREE PHYSIOTHERAPY CAMP LIGHTBOX & INTERACTION
+   -------------------------------------------------------------------------- */
+function initCampSection() {
+    const posterImg = document.getElementById('campPosterImg');
+    const viewBtn = document.getElementById('viewPosterBtn');
+    const lightbox = document.getElementById('lightbox');
+    const lightboxImg = document.getElementById('lightboxImage');
+    const lightboxCaption = document.getElementById('lightboxCaption');
+
+    const openCampPosterModal = () => {
+        if (lightbox && lightboxImg && lightboxCaption) {
+            lightboxImg.src = "images/free-physiotherapy-camp.jpg";
+            lightboxCaption.innerText = "Free Physiotherapy Camp Poster - Dr. Kiran Ameer (Wah Cantt Clinic)";
+            lightbox.classList.add('open');
+        }
+    };
+
+    if (posterImg) posterImg.addEventListener('click', openCampPosterModal);
+    if (viewBtn) viewBtn.addEventListener('click', openCampPosterModal);
 }
